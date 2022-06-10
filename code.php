@@ -1,20 +1,23 @@
 <?php
-	$a = 222222;
+	$arr = [
+		1 => 125,
+		2 => 225,
+		3 => 128,
+		4 => 356,
+		5 => 145,
+		6 => 281,
+		7 => 452,
+	];
+	$arrstr = [];
+	$arrnew = [];
 
-	$b = str_split("$a");
-	$sum = 0;
-	$tum = 0;
-	foreach ($b as $key => $values) {
-		if ($key <=2) {
-			$sum += $values;
-		}
-		if ($key >2) {
-			$tum += $values;
+	foreach ($arr as $key => $val) {
+		$arrstr[] = (string) $val;
+	}
+	foreach ($arrstr as $kes => $vas) {
+		if ($vas[0] == 1 or $vas[0] == 2) {
+			$arrnew[] = (int) $vas;
 		}
 	}
-	
-	if ($sum == $tum) {
-		echo "Задача решена правильно!";
-	} else {
-		echo "Что то идет не так :(";
-	}
+	var_dump($arrnew);
+?>
