@@ -1,23 +1,10 @@
 <?php
-	$arr = [
-		1 => 125,
-		2 => 225,
-		3 => 128,
-		4 => 356,
-		5 => 145,
-		6 => 281,
-		7 => 452,
-	];
-	$arrstr = [];
-	$arrnew = [];
+	$str = 'abcdefghklmnopqrstuvwxyz';
 
-	foreach ($arr as $key => $val) {
-		$arrstr[] = (string) $val;
+	$arr = str_split(str_shuffle($str), 6);
+	foreach ($arr as $val) {
+		$str = $val;
+		break;
 	}
-	foreach ($arrstr as $kes => $vas) {
-		if ($vas[0] == 1 or $vas[0] == 2) {
-			$arrnew[] = (int) $vas;
-		}
-	}
-	var_dump($arrnew);
-?>
+
+	echo $str;
