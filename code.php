@@ -1,10 +1,8 @@
 <?php
-	$str = 'abcdefghklmnopqrstuvwxyz';
+	$day = date_create(date('Y-m-d'));
 
-	$arr = str_split(str_shuffle($str), 6);
-	foreach ($arr as $val) {
-		$str = $val;
-		break;
-	}
+	date_modify($day, '-100 days');
+	$str = date_format($day, 'j F Y');
+	$val = date('D', strtotime($str));
 
-	echo $str;
+	echo $val;
