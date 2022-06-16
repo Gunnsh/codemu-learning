@@ -1,3 +1,4 @@
 <?php
-	$str = [range(1, 3), range(4, 6), range(7, 9)];
-	print_r($str);
+	 $str = '1234567890'; // Любые цифры в строке.
+	 $arr = str_split($str, 2);
+	 echo array_sum($arr);
