@@ -1,4 +1,13 @@
 <?php
-	 $str = '1234567890'; // Любые цифры в строке.
-	 $arr = str_split($str, 2);
-	 echo array_sum($arr);
+	$num = 31;
+	$flag = true;
+	
+	for ($i = 2; $i < $num; $i++) {
+		if ($num % $i === 0) {
+			$flag = false;
+			break;
+		}
+	}
+	
+	var_dump($flag);
+?>
