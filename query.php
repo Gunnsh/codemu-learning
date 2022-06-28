@@ -8,17 +8,36 @@
 	$link = mysqli_connect($host, $user, $pass, $name); // присваиваем переменной обьект соединения с базой данных
 	mysqli_query($link, "set names 'utf8'");
 
-	$query = "SELECT * FROM users ORDER BY name, salary"; // запрос в виде строки
-//	mysqli_query($link, $query);
-	$result = mysqli_query($link, $query) or die(mysqli_error($link)); // присваиваем переменной обьект запроса к бд через обьект соединения
-
-	for ($data = []; $row = mysqli_fetch_assoc($result); $data[] = $row);
-//	$row = mysqli_fetch_assoc($result);
-	foreach ($data as $val) {
-		foreach ($val as $key => $elem) {
-			echo $key.' - '.$elem.'<br>';
-		}
-		echo '<br>';
-//		echo $val.'<br>';
+	if (!empty($_GET)) {
+		$del = $_GET['del'];
+		$querytwo =
+		"DELETE FROM users
+		WHERE id = $del";
+		mysqli_query($link, $querytwo);
 	}
+
+	$query = 
+	"SELECT *
+	FROM users";
+	$result = mysqli_query($link, $query) or die(mysqli_error($link)); // присваиваем переменной обьект запроса к бд через обьект соединения
+	for ($arr = []; $row = mysqli_fetch_assoc($result); $arr[] = $row);
 ?>
+
+<table>
+	<tr>
+		<th>id</th>
+		<th>name</th>
+		<th>age</th>
+		<th>salary</th>
+		<th>delete</th>
+	</tr>
+	<?php foreach ($arr as $val): ?>
+		<tr>
+			<td><?= $val['id']?></td>
+			<td><?= $val['name']?></td>
+			<td><?= $val['age']?></td>
+			<td><?= $val['salary']?></td>
+			<td><a href="?del=<?= $val['id'] ?>">удалить</a></td>
+		</tr>
+	<?php endforeach; ?>
+</table>
