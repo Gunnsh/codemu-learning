@@ -1,26 +1,39 @@
+<?php session_start(); ?>
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Профиль</title>
+	</head>
+<body>
+
 <?php
-	$host = 'localhost';
-	$user = 'root';
-	$pass = 'root';
-	$name = 'mydb';
+$id = $_SESSION["id"];
 
-	$link = mysqli_connect($host, $user, $pass, $name);
-	mysqli_query($link, "set names 'utf8'");
+$link = mysqli_connect('localhost', 'root', 'root', 'mydb');
+mysqli_query($link, "set names 'utf8'");
+$query = "SELECT * FROM users WHERE id='$id'";
+$result = mysqli_fetch_assoc(mysqli_query($link, $query));
 
-	$id = $_GET['id'];
-	$query = "SELECT * FROM users WHERE id = $id";
-	$result = mysqli_query($link, $query);
-	$resarr = mysqli_fetch_assoc($result);
+$username = $result["name"];
+$age = date('Y', time()) - date('Y', strtotime($result["birthdate"]));
+if (isset($result["country"])) {
+	$country = $result["country"];
+}
 ?>
 
-<div>
-	<p>
-		имя: <span class="name"><?= $resarr['name'] ?></span>
-	</p>
-	<p>
-		возраст: <span class="age"><?= $resarr['age'] ?></span>,
-		зарплата: <span class="salary"><?= $resarr['salary'] ?></span>,
-	</p>
-</div>
-
-<a href="index.php">back</a>
+<table align="center">
+	<tr>
+		<td>Здравствуйте, <?= $username ?></td>
+	</tr>
+	<tr>
+		<td>Вам <?= $age ?></td>
+	</tr>
+	<tr>
+		<td>Страна проживания: <?php if (isset($country)) echo $country; ?></td>
+	</tr>
+	<tr>
+		<td><a href="account.php">Редактировать</a></td>
+	</tr>
+</table>
