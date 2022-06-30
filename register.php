@@ -10,6 +10,8 @@
 <body>
 
 <?php
+include 'countries.php';
+
 $nameErr = $passErr = $secpassErr = $emailErr = $dateErr = "";
 $name = $pass = $secpass = $email = $date = $country = "";
 
@@ -106,12 +108,9 @@ function test_input($data) {
 			<td><select name="country">
 				<?php if (!empty($country)) echo "<option>".$country."</option>"; ?>
 				<option>...</option>
-				<option>Несколько вариантов реализации</option>
-				<option>списка стран</option>
-				<option>1. Инклудить второй файл пхп с массивом стран</option>
-				<option>2. Залить в бд таблицу стран</option>
-				<option>получить из бд в массив</option>
-				<option>форичем каждую страну вставить в селект как опшин</option>
+				<?php foreach ($countries as $val) { ?>
+				<option><?= $val ?></option>
+				<? } ?>
 			</select></td>
 		<tr>
 			<td></td>
@@ -122,21 +121,18 @@ function test_input($data) {
 
 <?php
 if (($nameErr && $passErr && $secpassErr && $emailErr && $dateErr) == "") {
-	$host = 'localhost';
-	$user = 'root';
-	$passconnect = 'root';
-	$nameconnect = 'mydb';
-
-	$link = mysqli_connect($host, $user, $passconnect, $nameconnect);
+	$link = mysqli_connect('localhost', 'root', 'root', 'mydb');
 	mysqli_query($link, "set names 'utf8'");
 
 	if (($name && $pass && $email && $date) != "") {
 		$pass = password_hash($pass, PASSWORD_DEFAULT);
 		if ($country != "...") {
-			$query = "INSERT INTO users SET name='$name', password='$pass', email='$email', birthdate='$date', country='$country'";
-		} elseif ($country == "...") {
-			$query = "INSERT INTO users SET name='$name', password='$pass', email='$email', birthdate='$date'";
-		}
+			$query = "INSERT INTO users SET name='$name', password='$pass', email='$email', birthdate='$date', country='$country'"; ?>
+			<p align="center">Успешная регистрация!</p>
+		<?php } elseif ($country == "...") {
+			$query = "INSERT INTO users SET name='$name', password='$pass', email='$email', birthdate='$date'"; ?>
+			<p align="center">Успешная регистрация!</p>
+		<?php }
 		mysqli_query($link, $query);
 	}
 }

@@ -68,15 +68,9 @@ function test_input($date) {
 
 <?php
 if (($loginErr && $passErr && $autoErr) == "") {
-	$host = "localhost";
-	$user = "root";
-	$tablepass = "root";
-	$db = "mydb";
-
-	$link = mysqli_connect($host, $user, $tablepass, $db);
+	$link = mysqli_connect('localhost', 'root', 'root', 'mydb');
 
 	if (($login && $pass) != "") {
-//		$pass = md5($pass);
 		$query = "SELECT * FROM users WHERE name='$login'";
 		$resquery = mysqli_fetch_assoc(mysqli_query($link, $query));
 
@@ -84,7 +78,9 @@ if (($loginErr && $passErr && $autoErr) == "") {
 			$hash = $resquery["password"];
 
 			if (password_verify($_POST["pass"], $hash)) {
-				echo "Авторизация прошла успешно!";
+				$_SESSION["auth"] = true;
+				$_SESSION["id"] = $resquery["id"];
+				header("Location: show.php?id={$resquery['id']}");
 			} else {
 				$_SESSION["flash"] = "Введены неправильные данные";
 			}
