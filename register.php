@@ -1,12 +1,16 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Регистрация аккаунта</title>
-		<style>
-			.error {color: #FF0000;}
-		</style>
-	</head>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Регистрация аккаунта</title>
+    <style>
+    .error {
+        color: #FF0000;
+    }
+    </style>
+</head>
+
 <body>
 
 <?php
@@ -74,50 +78,61 @@ function test_input($data) {
 }
 ?>
 
-<form method="POST" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
-	<table align="center" cellspacing="0" cellpadding="4">
-		<tr>
-			<td></td><td><span class="error">* обязательные поля</span></td>
-		</tr>
-		<tr>
-			<td align="right" width="100">Логин: </td>
-			<td><input name="name" value="<?= $name ?>">
-			<span class="error">* <?= $nameErr ?></span></td>
-		</tr>
-		<tr>
-			<td align="right">Пароль: </td>
-			<td><input type="password" name="password" value="<?php if (isset($_POST["password"])) echo $_POST["password"]; ?>">
-			<span class="error">* <?= $passErr ?></span></td>
-		</tr>
-		<tr>
-			<td align="right"><nobr>Подтвердите пароль: </nobr></td>
-			<td><input type="password" name="secondpass" value="<?php if (isset($_POST["secondpass"])) echo $_POST["secondpass"]; ?>">
-			<span class="error">* <?= $secpassErr ?></span></td>
-		</tr>
-		<tr>
-			<td align="right">Email: </td>
-			<td><input name="email" value="<?= $email ?>">
-			<span class="error">* <?= $emailErr ?></span></td>
-		</tr>
-		<tr>
-			<td align="right">Дата рождения: </td>
-			<td><input type="date" name="date" value="<?= $date ?>">
-			<span class="error">* <?= $dateErr ?></span></td>
-		<tr>
-			<td align="right">Страна: </td>
-			<td><select name="country">
-				<?php if (!empty($country)) echo "<option>".$country."</option>"; ?>
-				<option>...</option>
-				<?php foreach ($countries as $val) { ?>
-				<option><?= $val ?></option>
-				<? } ?>
-			</select></td>
-		<tr>
-			<td></td>
-			<td><input type="submit" value="Отправить"> Зарегистрированы? <a href="login.php">Авторизуйтесь!</a></td>
-		</tr>
-	</table>
-</form>
+    <form method="POST" action="<?= htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
+        <table align="center" cellspacing="0" cellpadding="4">
+            <tr>
+                <td></td>
+                <td><span class="error">* обязательные поля</span></td>
+            </tr>
+            <tr>
+                <td align="right" width="100">Логин: </td>
+                <td><input name="name" value="<?= $name ?>">
+                    <span class="error">* <?= $nameErr ?></span>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Пароль: </td>
+                <td><input type="password" name="password"
+                        value="<?php if (isset($_POST["password"])) echo $_POST["password"]; ?>">
+                    <span class="error">* <?= $passErr ?></span>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <nobr>Подтвердите пароль: </nobr>
+                </td>
+                <td><input type="password" name="secondpass"
+                        value="<?php if (isset($_POST["secondpass"])) echo $_POST["secondpass"]; ?>">
+                    <span class="error">* <?= $secpassErr ?></span>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Email: </td>
+                <td><input name="email" value="<?= $email ?>">
+                    <span class="error">* <?= $emailErr ?></span>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Дата рождения: </td>
+                <td><input type="date" name="date" value="<?= $date ?>">
+                    <span class="error">* <?= $dateErr ?></span>
+                </td>
+            <tr>
+                <td align="right">Страна: </td>
+                <td><select name="country">
+                        <?php if (!empty($country)) echo "<option>".$country."</option>"; ?>
+                        <option>...</option>
+                        <?php foreach ($countries as $val) { ?>
+                        <option><?= $val ?></option>
+                        <? } ?>
+                    </select></td>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Отправить"> Зарегистрированы? <a href="login.php">Авторизуйтесь!</a>
+                </td>
+            </tr>
+        </table>
+    </form>
 
 <?php
 if (($nameErr && $passErr && $secpassErr && $emailErr && $dateErr) == "") {
@@ -127,12 +142,12 @@ if (($nameErr && $passErr && $secpassErr && $emailErr && $dateErr) == "") {
 	if (($name && $pass && $email && $date) != "") {
 		$pass = password_hash($pass, PASSWORD_DEFAULT);
 		if ($country != "...") {
-			$query = "INSERT INTO users SET name='$name', password='$pass', email='$email', birthdate='$date', country='$country'"; ?>
-			<p align="center">Успешная регистрация!</p>
-		<?php } elseif ($country == "...") {
-			$query = "INSERT INTO users SET name='$name', password='$pass', email='$email', birthdate='$date'"; ?>
-			<p align="center">Успешная регистрация!</p>
-		<?php }
+			$query = "INSERT INTO users SET name='$name', password='$pass', email='$email', birthdate='$date', country='$country', status='user'"; ?>
+    <p align="center">Успешная регистрация!</p>
+    <?php } elseif ($country == "...") {
+			$query = "INSERT INTO users SET name='$name', password='$pass', email='$email', birthdate='$date', status='user'"; ?>
+    <p align="center">Успешная регистрация!</p>
+    <?php }
 		mysqli_query($link, $query);
 	}
 }

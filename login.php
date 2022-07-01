@@ -2,16 +2,20 @@
 
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Авторизация</title>
-		<style>
-			.error {color: #FF0000;}
-		</style>
-	</head>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Авторизация</title>
+    <style>
+    .error {
+        color: #FF0000;
+    }
+    </style>
+</head>
+
 <body>
 
-<?php
+    <?php
 $login = $pass = "";
 $loginErr = $passErr = $autoErr = "";
 
@@ -29,11 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 }
 
-if (!empty($_SESSION["flash"])) {
-	$autoErr = $_SESSION["flash"];
-	unset($_SESSION["flash"]);
-}
-
 function test_input($date) {
 	$date = trim($date);
 	$date = stripslashes($date);
@@ -42,28 +41,30 @@ function test_input($date) {
 }
 ?>
 
-<form action="<?= $_SERVER["PHP_SELF"]?>" method="POST">
-	<table align="center">
-		<tr>
-			<td></td>
-			<td><span class="error">* обязательные поля</span></td>
-		</tr>
-		<tr>
-			<td align="right">Логин: </td>
-			<td><input name="login" value="<?php if (isset($_POST["login"])) echo $login; ?>">
-			<span class="error">* <?= !empty($autoErr) ? $autoErr : $loginErr ?></span></td>
-		</tr>
-		<tr>
-			<td align="right">Пароль: </td>
-			<td><input type="password" name="pass" value="<?php if (isset($_POST["pass"])) echo $pass; ?>">
-			<span class="error">* <?= $passErr ?></span></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><input type="submit" value="Отправить"> <a href="register.php">Зарегистрироваться</a></td>
-		</tr>
-	</table>
-</form>
+    <form action="<?= $_SERVER["PHP_SELF"]?>" method="POST">
+        <table align="center">
+            <tr>
+                <td></td>
+                <td><span class="error">* обязательные поля</span></td>
+            </tr>
+            <tr>
+                <td align="right">Логин: </td>
+                <td><input name="login" value="<?php if (isset($_POST["login"])) echo $login; ?>">
+                    <span class="error">* <?= !empty($autoErr) ? $autoErr : $loginErr ?></span>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Пароль: </td>
+                <td><input type="password" name="pass" value="<?php if (isset($_POST["pass"])) echo $pass; ?>">
+                    <span class="error">* <?= $passErr ?></span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Отправить"> <a href="register.php">Зарегистрироваться</a></td>
+            </tr>
+        </table>
+    </form>
 </body>
 
 <?php
@@ -80,13 +81,16 @@ if (($loginErr && $passErr && $autoErr) == "") {
 			if (password_verify($_POST["pass"], $hash)) {
 				$_SESSION["auth"] = true;
 				$_SESSION["id"] = $resquery["id"];
+				$_SESSION["status"] = $resquery["status"];
 				header("Location: show.php?id={$resquery['id']}");
-			} else {
-				$_SESSION["flash"] = "Введены неправильные данные";
-			}
-		} else {
-			$_SESSION["flash"] = "Введены неправильные данные";
-		}
+			} else { ?>
+<p align="center">"Введены неправильные данные"
+<p>
+    <?php }
+		} else { ?>
+<p align="center">"Введены неправильные данные"
+<p>
+    <?php }
 	}
 }
 ?>
