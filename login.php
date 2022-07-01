@@ -72,7 +72,12 @@ if (($loginErr && $passErr && $autoErr) == "") {
 	$link = mysqli_connect('localhost', 'root', 'root', 'mydb');
 
 	if (($login && $pass) != "") {
-		$query = "SELECT * FROM users WHERE name='$login'";
+		$query = "
+        SELECT users.id, name, password, status
+        FROM users
+        LEFT JOIN statuses
+        ON users.status_id=statuses.id
+        WHERE name='$login'";
 		$resquery = mysqli_fetch_assoc(mysqli_query($link, $query));
 
 		if ($resquery !== null) {
@@ -82,6 +87,7 @@ if (($loginErr && $passErr && $autoErr) == "") {
 				$_SESSION["auth"] = true;
 				$_SESSION["id"] = $resquery["id"];
 				$_SESSION["status"] = $resquery["status"];
+                $_SESSION["name"] = $resquery["name"];
 				header("Location: show.php?id={$resquery['id']}");
 			} else { ?>
 <p align="center">"Введены неправильные данные"
