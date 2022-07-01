@@ -9,8 +9,12 @@
 </head>
 
 <body>
+    <header align="center"><b>
+            <?php if (isset($_SESSION["auth"]) and isset($_SESSION["status"])) echo $_SESSION["name"]." - ".$_SESSION["status"]; ?>
+        </b><?php if (isset($_SESSION["status"]) && $_SESSION["status"] == "admin") { ?><a
+            href="admin.php">Админка</a><?php } ?></header>
 
-<?php
+    <?php
 $id = $_SESSION["id"];
 
 $link = mysqli_connect('localhost', 'root', 'root', 'mydb');

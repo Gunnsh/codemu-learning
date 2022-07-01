@@ -142,10 +142,10 @@ if (($nameErr && $passErr && $secpassErr && $emailErr && $dateErr) == "") {
 	if (($name && $pass && $email && $date) != "") {
 		$pass = password_hash($pass, PASSWORD_DEFAULT);
 		if ($country != "...") {
-			$query = "INSERT INTO users SET name='$name', password='$pass', email='$email', birthdate='$date', country='$country', status='user'"; ?>
+			$query = "INSERT INTO users SET name='$name', password='$pass', email='$email', birthdate='$date', country='$country', status_id='2'"; ?>
     <p align="center">Успешная регистрация!</p>
     <?php } elseif ($country == "...") {
-			$query = "INSERT INTO users SET name='$name', password='$pass', email='$email', birthdate='$date', status='user'"; ?>
+			$query = "INSERT INTO users SET name='$name', password='$pass', email='$email', birthdate='$date', status_id='2'"; ?>
     <p align="center">Успешная регистрация!</p>
     <?php }
 		mysqli_query($link, $query);

@@ -9,8 +9,12 @@
 </head>
 
 <body>
+    <header align="center"><b>
+            <?php if (isset($_SESSION["status"])) echo $_SESSION["name"]." - ".$_SESSION["status"]; ?>
+        </b><?php if (isset($_SESSION["status"]) && $_SESSION["status"] == "admin") { ?><a
+            href="admin.php">Админка</a><?php } ?></header>
 
-<?php
+    <?php
 $link = mysqli_connect('localhost', 'root', 'root', 'mydb');
 mysqli_query($link, "set names 'utf8'");
 
@@ -44,7 +48,7 @@ $result = mysqli_fetch_assoc(mysqli_query($link, $query));
         </form>
     </table>
 
-<?php
+    <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$name = $_POST["name"];
 	$email = $_POST["email"];
