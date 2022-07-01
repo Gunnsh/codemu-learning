@@ -2,10 +2,12 @@
 
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Профиль</title>
-	</head>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Профиль</title>
+</head>
+
 <body>
 
 <?php
@@ -23,17 +25,17 @@ if (isset($result["country"])) {
 }
 ?>
 
-<table align="center">
-	<tr>
-		<td>Здравствуйте, <?= $username ?></td>
-	</tr>
-	<tr>
-		<td>Вам <?= $age ?></td>
-	</tr>
-	<tr>
-		<td>Страна проживания: <?php if (isset($country)) echo $country; ?></td>
-	</tr>
-	<tr>
-		<td><a href="account.php">Редактировать</a></td>
-	</tr>
-</table>
+    <table align="center">
+        <tr>
+            <td>Здравствуйте, <?= $username ?></td>
+        </tr>
+        <tr>
+            <td>Вам <?= $age ?></td>
+        </tr>
+        <tr>
+            <td>Страна проживания: <?php if (isset($country)) echo $country; ?></td>
+        </tr>
+        <tr>
+            <td><a href="account.php">Редактировать</a></td>
+        </tr>
+    </table>

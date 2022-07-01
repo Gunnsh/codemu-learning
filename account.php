@@ -2,10 +2,12 @@
 
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Редактировать профиль</title>
-	</head>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Редактировать профиль</title>
+</head>
+
 <body>
 
 <?php
@@ -17,30 +19,30 @@ $query = "SELECT * FROM users WHERE id='$id'";
 $result = mysqli_fetch_assoc(mysqli_query($link, $query));
 ?>
 
-<table align="center">
-	<form action="" method="POST">
-		<tr>
-			<td align="right">Логин: </td>
-			<td><input name="name" value="<?= $result["name"] ?>"></td>
-		</tr>
-		<tr>
-			<td align="right">Email: </td>
-			<td><input name="email" value="<?= $result["email"] ?>"></td>
-		</tr>
-		<tr>
-			<td align="right">Дата рождения: </td>
-			<td><input name="birthdate" type="date" value="<?= $result["birthdate"] ?>"></td>
-		</tr>
-		<tr>
-			<td align="right">Страна проживания: </td>
-			<td><input name="country" value="<?= $result["country"] ?>"></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><input type="submit"></td>
-		<tr>
-	</form>
-</table>
+    <table align="center">
+        <form action="" method="POST">
+            <tr>
+                <td align="right">Логин: </td>
+                <td><input name="name" value="<?= $result["name"] ?>"></td>
+            </tr>
+            <tr>
+                <td align="right">Email: </td>
+                <td><input name="email" value="<?= $result["email"] ?>"></td>
+            </tr>
+            <tr>
+                <td align="right">Дата рождения: </td>
+                <td><input name="birthdate" type="date" value="<?= $result["birthdate"] ?>"></td>
+            </tr>
+            <tr>
+                <td align="right">Страна проживания: </td>
+                <td><input name="country" value="<?= $result["country"] ?>"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit"></td>
+            <tr>
+        </form>
+    </table>
 
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -52,9 +54,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$query = "UPDATE users SET name='$name', email='$email', birthdate='$birth', country='$country' WHERE id=$id";
 	$result = mysqli_query($link, $query);
 	if ($result) { ?>
-		<p align="center">Данные сохранены успешно!<p>
-	<?php }
+    <p align="center">Данные сохранены успешно!
+    <p>
+        <?php }
 }
 ?>
 
-<p align="center"><a href="changePass.php">Сменить пароль</a><p>
+    <p align="center"><a href="changePass.php">Сменить пароль</a>
+    <p>
+    <p align="center"><a href="delete.php">Удалить аккаунт</a>
+    <p>
