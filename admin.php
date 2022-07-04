@@ -6,6 +6,15 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Админка</title>
+    <style type="text/css">
+    .ass {
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        color: #333366;
+        float: left;
+        font-size: 14px;
+        width: 150px;
+    }
+    </style>
 </head>
 
 <body>
@@ -17,7 +26,10 @@
     <?php
 if (!empty($_SESSION["auth"]) and $_SESSION["status"] === "admin") {
 	$link = mysqli_connect('localhost', 'root', 'root', 'mydb');
-	$query = "SELECT id, name, status FROM users";
+	$query = "SELECT users.id, name, password, status
+	FROM users
+	LEFT JOIN statuses
+	ON users.status_id=statuses.id";
 	$result = mysqli_query($link, $query);
 
 	for ($i = 1, $user_status = []; $row = mysqli_fetch_assoc($result); $i++) {
@@ -26,7 +38,7 @@ if (!empty($_SESSION["auth"]) and $_SESSION["status"] === "admin") {
 	}
 ?>
 
-    <table align="center">
+    <table class="ass">
         <?php foreach ($user_status as $val) { ?>
         <tr <?= $val["status"] === "admin" ? "style=\"background: #FFC0CB;\"" : "style=\"background: #98FB98;\"" ?>>
             <td><?= $val["name"] ?></td>
